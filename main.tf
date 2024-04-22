@@ -192,7 +192,7 @@ resource "aws_instance" "web" {
     key_name               = aws_key_pair.TF_key.key_name  # Reference the key_name from aws_key_pair resource
     vpc_security_group_ids = [aws_security_group.TF_SG.id]
     subnet_id              = aws_subnet.public-subnet-1.id 
-    user_data              = file("rds_script.sh")
+    user_data              = file("example1.sh")
     
     tags = {
         Name = "rds_access"
