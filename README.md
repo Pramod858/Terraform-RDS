@@ -1,7 +1,7 @@
 # Terraform AWS RDS Cluster Setup
 
 This project contains Terraform configuration files to set up an Amazon RDS (Relational Database Service) Aurora MySQL cluster along with relevant AWS infrastructure such as VPCs, subnets, security groups, and an EC2 instance.
-
+![0 1](https://github.com/user-attachments/assets/294ce54b-aee5-4921-b3c4-23da24d21185)
 ## Project Structure
 
 The Terraform configuration files are located in the `Terraform` directory:
