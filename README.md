@@ -1,3 +1,5 @@
+Got it! Here's the refined README without including any code except for the `backend.tf` path:
+
 # Terraform AWS RDS Cluster Setup
 
 This project contains Terraform configuration files to set up an Amazon RDS (Relational Database Service) Aurora MySQL cluster along with relevant AWS infrastructure such as VPCs, subnets, security groups, and an EC2 instance.
@@ -9,7 +11,7 @@ The Terraform configuration files are located in the `Terraform` directory:
 - `provider.tf`: Contains the AWS provider configuration.
 - `backend.tf`: Configures the backend for Terraform state storage in an S3 bucket.
 - `variables.tf`: Defines all the input variables used in the Terraform scripts.
-- `vpc.tf`: Configures VPC and subnet resources, with Internet Gateway, NAT Gateway, and route tables.
+- `vpc.tf`: Configures VPC and subnet resources with an Internet Gateway, NAT Gateway, and route tables.
 - `security.tf`: Defines security groups.
 - `instance.tf`: Defines EC2 instance launch configuration.
 - `rds.tf`: Configures the RDS Aurora MySQL cluster and its instances.
@@ -21,80 +23,21 @@ To enable remote state storage in an S3 bucket:
 
 1. **Add Backend Configuration to an existing S3 bucket**:
 
-    Create `backend.tf` in the `Terraform` directory:
+    Create a `backend.tf` file in the `Terraform` directory with the following content:
 
     ```hcl
     terraform {
       backend "s3" {
-        bucket = "your-terraform-state-bucket" # replace with your S3 bucket
-        key    = "terraform/state/terraform.tfstate"
-        region = "us-east-1 # replace with your region
+        bucket = "your-terraform-state-bucket" # replace with your S3 bucket name
+        key    = "terraform/rds/terraform.tfstate"
+        region = "us-east-1" # replace with your region
       }
     }
     ```
 
-    Replace `your-terraform-state-bucket` with your S3 bucket name.
-
 ## Variables
 
-Define variables in the `variables.tf` file:
-
-```hcl
-variable "region" {
-  description = "The AWS region"
-  default     = "us-east-1"
-}
-
-variable "vpc_cidr" {
-  description = "The CIDR block for the VPC"
-  default     = "10.0.0.0/16"
-}
-
-variable "public_sb1_cidr" {
-  description = "The CIDR block for the first public subnet"
-  default     = "10.0.1.0/24"
-}
-
-variable "private_sb1_cidr" {
-  description = "The CIDR block for the first private subnet"
-  default     = "10.0.2.0/24"
-}
-
-variable "public_sb2_cidr" {
-  description = "The CIDR block for the second public subnet"
-  default     = "10.0.3.0/24"
-}
-
-variable "private_sb2_cidr" {
-  description = "The CIDR block for the second private subnet"
-  default     = "10.0.4.0/24"
-}
-
-variable "instance_type" {
-  description = "The instance type for the EC2 instance"
-  default     = "t2.micro"
-}
-
-variable "db_name" {
-  description = "The name of the database"
-  default     = "mydb"
-}
-
-variable "username" {
-  description = "The username for the RDS database"
-  default     = "admin"
-}
-
-variable "password" {
-  description = "The password for the RDS database"
-  default     = "yourpassword"
-}
-
-variable "key_pair" {
-  description = "The name of the EC2 key pair"
-  default     = "AWS"
-}
-```
+Define variables in the `TF-RDS/variables.tf` file.
 
 ## GitHub Actions Setup
 
@@ -108,97 +51,45 @@ variable "key_pair" {
         - `AWS_SECRET_ACCESS_KEY`
         - `AWS_REGION`
 
-2. **Create a GitHub Action Workflow**:
+2. **Run a GitHub Action Workflow**:
 
-    Create a `.github/workflows/terraform.yml` file with the following content:
-
-    ```yaml
-    name: 'Terraform AWS RDS Cluster Setup'
-
-    on:
-      push:
-        branches:
-          - main
-
-    jobs:
-      terraform:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout code
-            uses: actions/checkout@v2
-
-          - name: Setup Terraform
-            uses: hashicorp/setup-terraform@v1
-            with:
-              terraform_version: 1.0.0
-
-          - name: Terraform Init
-            run: terraform init
-
-          - name: Terraform Validate
-            run: terraform validate
-
-          - name: Terraform Plan
-            run: terraform plan
-
-          - name: Terraform Apply
-            run: terraform apply -auto-approve
-            env:
-              AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-              AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-              AWS_REGION: ${{ secrets.AWS_REGION }}
-    ```
+    Create and trigger a `.github/workflows/tf_rds_deploy.yml` file workflow.
 
 ## Local Setup
 
 1. **Clone the Repository**:
 
-    ```sh
-    git clone <your-repo-url>
-    cd Terraform
-    ```
+    Clone your repository using the following command:
+    
+    `git clone https://github.com/Pramod858/Terraform-RDS` and navigate to the `Terraform` directory.
 
 2. **Install Terraform**:
 
-    Download and install Terraform from [here](https://www.terraform.io/downloads).
+    Download and install Terraform from the official Terraform website.
 
 3. **Install AWS CLI**:
 
-    Follow the installation guide [here](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
+    Follow the installation guide on the AWS CLI official website.
 
 4. **Configure AWS CLI**:
 
-    ```sh
-    aws configure
-    ```
-
-    Enter your AWS Access Key ID, Secret Access Key, region, and output format.
+    Use the `aws configure` command to set up your AWS CLI with your AWS Access Key ID, Secret Access Key, region, and output format.
 
 5. **Initialize Terraform**:
 
-    ```sh
-    terraform init
-    ```
+    Run `terraform init` to initialize your Terraform configuration.
 
 6. **Validate the Configuration**:
 
-    ```sh
-    terraform validate
-    ```
+    Use the `terraform validate` command to ensure your configuration is correct.
 
 7. **Plan the Deployment**:
 
-    ```sh
-    terraform plan
-    ```
+    Run `terraform plan` to see a preview of the changes that will be made by Terraform.
 
 8. **Apply the Configuration**:
 
-    ```sh
-    terraform apply
-    ```
-
-    You will be prompted to confirm the apply action. Type `yes` to proceed.
+    Execute `terraform apply` and confirm the action by typing `yes` when prompted.
 
 9. **Check the Output**:
 
@@ -206,11 +97,7 @@ variable "key_pair" {
 
 ## Clean Up
 
-To destroy the infrastructure managed by Terraform, use the following command:
-
-```sh
-terraform destroy
-```
+To destroy the infrastructure managed by Terraform, use the `terraform destroy` command.
 
 ## References
 
@@ -223,3 +110,5 @@ By following this guide, users can set up and use Terraform to provision AWS res
 
 - Ensure your IAM user has the necessary permissions to manage the S3 bucket, EC2 instances, and other AWS resources.
 - The `.gitignore` file should exclude sensitive files like `terraform.tfstate` and `.tfvars`.
+
+This version of the README ensures clarity without exposing any specific code except where necessary.
