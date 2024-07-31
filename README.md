@@ -1,5 +1,3 @@
-Got it! Here's the refined README without including any code except for the `backend.tf` path:
-
 # Terraform AWS RDS Cluster Setup
 
 This project contains Terraform configuration files to set up an Amazon RDS (Relational Database Service) Aurora MySQL cluster along with relevant AWS infrastructure such as VPCs, subnets, security groups, and an EC2 instance.
