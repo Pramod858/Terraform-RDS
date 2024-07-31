@@ -61,7 +61,7 @@ Define variables in the `TF-RDS/variables.tf` file.
 
     Clone your repository using the following command:
     
-    `git clone https://github.com/Pramod858/Terraform-RDS` and navigate to the `Terraform-RDS` directory.
+    `git clone https://github.com/Pramod858/Terraform-RDS` and navigate to the `Terraform-RDS/TF-RDS` directory.
 
 2. **Install Terraform**:
 
